@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Bolivia - Departamentos</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #e0f7fa, #ffffff);
+}
+
+header {
+  background: #0077b6;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+nav button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  background: #00b4d8;
+  color: white;
+  cursor: pointer;
+}
+
+nav button:hover {
+  background: #023e8a;
+}
+
+.container {
+  padding: 20px;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* TARJETAS */
+.card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card h3 {
+  text-align: center;
+}
+
+.card button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background: #0077b6;
+  color: white;
+  cursor: pointer;
+}
+
+/* DETALLE */
+.detalle {
+  text-align: center;
+}
+
+.galeria {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.galeria img {
+  width: 45%;
+  max-width: 300px;
+  border-radius: 15px;
+}
+
+.volver {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background: #0077b6;
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🇧🇴 Departamentos de Bolivia</h1>
+  <nav id="menu"></nav>
+</header>
+
+<div class="container" id="contenido"></div>
+
+<script>
+
+const departamentos = [
+  {
+    nombre:"La Paz",
+    desc:"Sede de gobierno.",
+    imgs:[
+      "https://upload.wikimedia.org/wikipedia/commons/7/7e/La_Paz_Bolivia.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3a/Teleferico_La_Paz.jpg"
+    ]
+  },
+  {
+    nombre:"Santa Cruz",
+    desc:"Centro económico.",
+    imgs:[
+      "https://upload.wikimedia.org/wikipedia/commons/4/4c/Santa_Cruz_de_la_Sierra.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2a/Cristo_Redentor_SCZ.jpg"
+    ]
+  },
+  {
+    nombre:"Cochabamba",
+    desc:"Eterna primavera.",
+    imgs:[
+      "https://upload.wikimedia.org/wikipedia/commons/2/2e/Cochabamba.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/59/Cristo_de_la_Concordia.jpg"
+    ]
+  },
+  {
+    nombre:"Oruro",
+    desc:"Carnaval famoso.",
+    imgs:[
+      "https://oruro.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/f/f4/Carnaval_de_Oruro.jpg"
+    ]
+  },
+  {
+    nombre:"Potosí",
+    desc:"Cerro Rico.",
+    imgs:[
+      "https://upload.wikimedia.org/wikipedia/commons/1/1b/Potosi.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/9/9a/Cerro_Rico.jpg"
+    ]
+  },
+  {
+    nombre:"Tarija",
+    desc:"Región de vinos.",
+    imgs:[
+      "https://upload.wikimedia.org/wikipedia/commons/0/0b/Tarija.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6c/Vinedos_Tarija.jpg"
+    ]
+  },
+  {
+    nombre:"Chuquisaca",
+    desc:"Capital Sucre.",
+    imgs:[
+      "https://upload.wikimedia.org/wikipedia/commons/f/f4/Sucre_Bolivia.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Sucre_centro.jpg"
+    ]
+  },
+  {
+    nombre:"Beni",
+    desc:"Amazonía.",
+    imgs:[
+      "https://upload.wikimedia.org/wikipedia/commons/6/6f/Beni.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/1f/Llanos_de_Moxos.jpg"
+    ]
+  },
+  {
+    nombre:"Pando",
+    desc:"Selva amazónica.",
+    imgs:[
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Pando.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/8/8e/Selva_Pando.jpg"
+    ]
+  }
+];
+
+const menu = document.getElementById("menu");
+const contenido = document.getElementById("contenido");
+
+/* MENU */
+departamentos.forEach(dep => {
+  const btn = document.createElement("button");
+  btn.innerText = dep.nombre;
+  btn.onclick = () => mostrarDetalle(dep);
+  menu.appendChild(btn);
+});
+
+/* INICIO */
+function mostrarInicio(){
+  contenido.innerHTML = '<div class="grid"></div>';
+  const grid = document.querySelector(".grid");
+
+  departamentos.forEach(dep => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <img src="${dep.imgs[0]}">
+      <h3>${dep.nombre}</h3>
+      <button>Ver más</button>
+    `;
+
+    card.querySelector("button").onclick = () => mostrarDetalle(dep);
+    grid.appendChild(card);
+  });
+}
+
+/* DETALLE */
+function mostrarDetalle(dep){
+  contenido.innerHTML = `
+    <div class="detalle">
+      <h2>${dep.nombre}</h2>
+      <div class="galeria">
+        <img src="${dep.imgs[0]}">
+        <img src="${dep.imgs[1]}">
+      </div>
+      <p>${dep.desc}</p>
+      <button class="volver">⬅ Volver</button>
+    </div>
+  `;
+
+  document.querySelector(".volver").onclick = mostrarInicio;
+}
+
+/* INICIAR */
+mostrarInicio();
+
+</script>
+
+</body>
+</html>
